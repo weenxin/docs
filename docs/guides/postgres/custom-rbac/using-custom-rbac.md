@@ -132,7 +132,7 @@ rolebinding.rbac.authorization.k8s.io/my-custom-rolebinding created
 It should bind `my-custom-role` and `my-custom-serviceaccount` successfully.
 
 ```yaml
-$ kc get rolebinding -n demo my-custom-rolebinding -o yaml
+$ kubectl get rolebinding -n demo my-custom-rolebinding -o yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -200,7 +200,7 @@ quick-postgres-0   1/1       Running   0          14m
 Check the pod's log to see if the database is ready
 
 ```console
-$ kubectl logs -f -n demo custom-postgres-0
+$ kubectl logs -f -n demo quick-postgres-0
 I0705 12:05:51.697190       1 logs.go:19] FLAG: --alsologtostderr="false"
 I0705 12:05:51.717485       1 logs.go:19] FLAG: --enable-analytics="true"
 I0705 12:05:51.717543       1 logs.go:19] FLAG: --help="false"
@@ -210,9 +210,9 @@ I0705 12:05:51.717573       1 logs.go:19] FLAG: --logtostderr="false"
 I0705 12:05:51.717581       1 logs.go:19] FLAG: --stderrthreshold="0"
 I0705 12:05:51.717589       1 logs.go:19] FLAG: --v="0"
 I0705 12:05:51.717597       1 logs.go:19] FLAG: --vmodule=""
-We want "custom-postgres-0" as our leader
-I0705 12:05:52.753464       1 leaderelection.go:175] attempting to acquire leader lease  demo/custom-postgres-leader-lock...
-I0705 12:05:52.822093       1 leaderelection.go:184] successfully acquired lease demo/custom-postgres-leader-lock
+We want "quick-postgres-0" as our leader
+I0705 12:05:52.753464       1 leaderelection.go:175] attempting to acquire leader lease  demo/quick-postgres-leader-lock...
+I0705 12:05:52.822093       1 leaderelection.go:184] successfully acquired lease demo/quick-postgres-leader-lock
 Got leadership, now do your jobs
 Running as Primary
 sh: locale: not found
@@ -335,9 +335,9 @@ I0705 12:05:51.717573       1 logs.go:19] FLAG: --logtostderr="false"
 I0705 12:05:51.717581       1 logs.go:19] FLAG: --stderrthreshold="0"
 I0705 12:05:51.717589       1 logs.go:19] FLAG: --v="0"
 I0705 12:05:51.717597       1 logs.go:19] FLAG: --vmodule=""
-We want "custom-postgres-0" as our leader
-I0705 12:05:52.753464       1 leaderelection.go:175] attempting to acquire leader lease  demo/custom-postgres-leader-lock...
-I0705 12:05:52.822093       1 leaderelection.go:184] successfully acquired lease demo/custom-postgres-leader-lock
+We want "minute-postgres-0" as our leader
+I0705 12:05:52.753464       1 leaderelection.go:175] attempting to acquire leader lease  demo/minute-postgres-leader-lock...
+I0705 12:05:52.822093       1 leaderelection.go:184] successfully acquired lease demo/minute-postgres-leader-lock
 Got leadership, now do your jobs
 Running as Primary
 sh: locale: not found
