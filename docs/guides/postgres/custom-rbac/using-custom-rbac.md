@@ -3,7 +3,7 @@ title: Run PostgreSQL with Custom RBAC resources
 menu:
   docs_0.12.0:
     identifier: pg-custom-rbac-quickstart
-    name: Quickstart
+    name: Custom RBAC
     parent: pg-custom-rbac
     weight: 10
 menu_name: docs_0.12.0

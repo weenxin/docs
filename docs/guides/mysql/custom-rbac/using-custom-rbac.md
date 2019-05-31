@@ -3,7 +3,7 @@ title: Run MySQL with Custom RBAC resources
 menu:
   docs_0.12.0:
     identifier: my-custom-rbac-quickstart
-    name: Quickstart
+    name: Custom RBAC
     parent: my-custom-rbac
     weight: 10
 menu_name: docs_0.12.0
