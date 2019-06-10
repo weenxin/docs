@@ -182,7 +182,7 @@ MongoDB init process complete; ready for start up.
 2019-06-10T08:56:57.179+0000 I NETWORK  [thread1] connection accepted from 127.0.0.1:39214 #1 (1 connection now open)
 ```
 
-Once we see `MongoDB init process done. Ready for start up.` in the log, the database is ready.
+Once we see `connection accepted` in the log, the database is ready.
 
 ## Reusing Service Account
 
