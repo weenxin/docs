@@ -143,7 +143,7 @@ spec:
   version: "1.5.4-v1"
   podTemplate:
     spec:
-    serviceAccountName: my-custom-serviceaccount
+      serviceAccountName: my-custom-serviceaccount
       resources:
         limits:
           cpu: 500m
@@ -155,45 +155,21 @@ spec:
 
 ```
 
-Now, wait a few minutes. the KubeDB operator will create necessary PVC, statefulset, services, secret etc. If everything goes well, we should see that a pod with the name `quick-memcached-0` has been created.
+Now, wait a few minutes. the KubeDB operator will create necessary PVC, deployment, services, secret etc. If everything goes well, we should see that a pod with the name `quick-memcached-0` has been created.
 
-Check that the statefulset's pod is running
+Check that the deployment's pod is running
 
 ```console
+$ kubectl get pods -n demo
+NAME                              READY   STATUS    RESTARTS   AGE
+quick-memcached-d866d6d89-sdlkx   1/1     Running   0          5m52s
+quick-memcached-d866d6d89-wpdz2   1/1     Running   0          5m52s
+quick-memcached-d866d6d89-wvg7c   1/1     Running   0          5m52s
+
 $ kubectl get pod -n demo quick-memcached-0
-NAME                READY     STATUS    RESTARTS   AGE
-quick-memcached-0   1/1       Running   0          14m
+NAME                              READY     STATUS    RESTARTS   AGE
+quick-memcached-d866d6d89-wvg7c   1/1       Running   0          14m
 ```
-
-Check the pod's log to see if the database is ready
-
-```console
-$ kubectl logs -f -n demo quick-memcached-0
-Initializing database
-2019-05-31T05:02:35.307699Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:02:35.307762Z 0 [System] [MY-013169] [Server] /usr/sbin/memcachedd (memcachedd 8.0.14) initializing of server in progress as process 29
-2019-05-31T05:02:47.346326Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2019-05-31T05:02:53.777918Z 0 [System] [MY-013170] [Server] /usr/sbin/memcachedd (memcachedd 8.0.14) initializing of server has completed
-Database initialized
-Memcached init process in progress...
-Memcached init process in progress...
-2019-05-31T05:02:56.656884Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:02:56.656953Z 0 [System] [MY-010116] [Server] /usr/sbin/memcachedd (memcachedd 8.0.14) starting as process 80
-2019-05-31T05:02:57.876853Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2019-05-31T05:02:57.892774Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/memcachedd' in the path is accessible to all OS users. Consider choosing a different directory.
-2019-05-31T05:02:57.910391Z 0 [System] [MY-010931] [Server] /usr/sbin/memcachedd: ready for connections. Version: '8.0.14'  socket: '/var/run/memcachedd/memcachedd.sock'  port: 0  Memcached Community Server - GPL.
-2019-05-31T05:02:58.045050Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/memcachedd/memcachedx.sock'
-Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-
-2019-05-31T05:03:04.217396Z 0 [System] [MY-010910] [Server] /usr/sbin/memcachedd: Shutdown complete (memcachedd 8.0.14)  Memcached Community Server - GPL.
-
-Memcached init process done. Ready for start up.
-```
-
-Once we see `Memcached init process done. Ready for start up.` in the log, the database is ready.
 
 ## Reusing Service Account
 
@@ -219,7 +195,7 @@ spec:
   version: "1.5.4-v1"
   podTemplate:
     spec:
-    serviceAccountName: my-custom-serviceaccount
+      serviceAccountName: my-custom-serviceaccount
       resources:
         limits:
           cpu: 500m
@@ -231,46 +207,21 @@ spec:
 
 ```
 
-Now, wait a few minutes. the KubeDB operator will create necessary PVC, statefulset, services, secret etc. If everything goes well, we should see that a pod with the name `minute-memcached-0` has been created.
+Now, wait a few minutes. the KubeDB operator will create necessary PVC, deployment, services, secret etc. If everything goes well, we should see that a pod with the name `minute-memcached-0` has been created.
 
-Check that the statefulset's pod is running
+Check that the deployment's pod is running
 
 ```console
+$ kubectl get pods -n demo
+NAME                              READY   STATUS    RESTARTS   AGE
+minute-memcached-58798985f-47tm8  1/1     Running   0          5m52s
+minute-memcached-58798985f-47tm8  1/1     Running   0          5m52s
+minute-memcached-58798985f-47tm8  1/1     Running   0          5m52s
+
 $ kubectl get pod -n demo minute-memcached-0
-NAME                READY     STATUS    RESTARTS   AGE
-minute-memcached-0   1/1       Running   0          14m
+NAME                              READY     STATUS    RESTARTS   AGE
+minute-memcached-58798985f-47tm8  1/1       Running   0          14m
 ```
-
-Check the pod's log to see if the database is ready
-
-```console
-$ kubectl logs -f -n demo minute-memcached-0
-Initializing database
-2019-05-31T05:09:12.165236Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:09:12.165298Z 0 [System] [MY-013169] [Server] /usr/sbin/memcachedd (memcachedd 8.0.14) initializing of server in progress as process 28
-2019-05-31T05:09:24.903995Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2019-05-31T05:09:30.857155Z 0 [System] [MY-013170] [Server] /usr/sbin/memcachedd (memcachedd 8.0.14) initializing of server has completed
-Database initialized
-Memcached init process in progress...
-Memcached init process in progress...
-2019-05-31T05:09:33.931254Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:09:33.931315Z 0 [System] [MY-010116] [Server] /usr/sbin/memcachedd (memcachedd 8.0.14) starting as process 79
-2019-05-31T05:09:34.819349Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2019-05-31T05:09:34.834673Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/memcachedd' in the path is accessible to all OS users. Consider choosing a different directory.
-2019-05-31T05:09:34.850188Z 0 [System] [MY-010931] [Server] /usr/sbin/memcachedd: ready for connections. Version: '8.0.14'  socket: '/var/run/memcachedd/memcachedd.sock'  port: 0  Memcached Community Server - GPL.
-2019-05-31T05:09:35.064435Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/memcachedd/memcachedx.sock'
-Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-
-2019-05-31T05:09:41.236940Z 0 [System] [MY-010910] [Server] /usr/sbin/memcachedd: Shutdown complete (memcachedd 8.0.14)  Memcached Community Server - GPL.
-
-Memcached init process done. Ready for start up.
-
-```
-
-`Memcached init process done. Ready for start up.` in the log signifies that the database is running successfully.
 
 ## Cleaning up
 

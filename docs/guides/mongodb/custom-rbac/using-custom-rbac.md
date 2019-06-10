@@ -155,7 +155,7 @@ spec:
 
 ```
 
-Now, wait a few minutes. the KubeDB operator will create necessary PVC, statefulset, services, secret etc. If everything goes well, we should see that a pod with the name `quick-mongodb-0` has been created.
+Now, wait a few minutes. the KubeDB operator will create necessary PVC, deployment, statefulsets, services, secret etc. If everything goes well, we should see that a pod with the name `quick-mongodb-0` has been created.
 
 Check that the statefulset's pod is running
 
@@ -169,28 +169,17 @@ Check the pod's log to see if the database is ready
 
 ```console
 $ kubectl logs -f -n demo quick-mongodb-0
-Initializing database
-2019-05-31T05:02:35.307699Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:02:35.307762Z 0 [System] [MY-013169] [Server] /usr/sbin/mongodbd (mongodbd 8.0.14) initializing of server in progress as process 29
-2019-05-31T05:02:47.346326Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2019-05-31T05:02:53.777918Z 0 [System] [MY-013170] [Server] /usr/sbin/mongodbd (mongodbd 8.0.14) initializing of server has completed
-Database initialized
-MongoDB init process in progress...
-MongoDB init process in progress...
-2019-05-31T05:02:56.656884Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:02:56.656953Z 0 [System] [MY-010116] [Server] /usr/sbin/mongodbd (mongodbd 8.0.14) starting as process 80
-2019-05-31T05:02:57.876853Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2019-05-31T05:02:57.892774Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mongodbd' in the path is accessible to all OS users. Consider choosing a different directory.
-2019-05-31T05:02:57.910391Z 0 [System] [MY-010931] [Server] /usr/sbin/mongodbd: ready for connections. Version: '8.0.14'  socket: '/var/run/mongodbd/mongodbd.sock'  port: 0  MongoDB Community Server - GPL.
-2019-05-31T05:02:58.045050Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/mongodbd/mongodbx.sock'
-Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-
-2019-05-31T05:03:04.217396Z 0 [System] [MY-010910] [Server] /usr/sbin/mongodbd: Shutdown complete (mongodbd 8.0.14)  MongoDB Community Server - GPL.
-
-MongoDB init process done. Ready for start up.
+about to fork child process, waiting until server is ready for connections.
+forked process: 17
+2019-06-10T08:56:45.259+0000 I CONTROL  [main] ***** SERVER RESTARTED *****
+2019-06-10T08:56:45.263+0000 I CONTROL  [initandlisten] MongoDB starting : pid=17 port=27017 dbpath=/data/db 64-bit host=quick-mongodb-0
+...
+...
+MongoDB init process complete; ready for start up.
+...
+..
+2019-06-10T08:56:49.287+0000 I NETWORK  [thread1] waiting for connections on port 27017
+2019-06-10T08:56:57.179+0000 I NETWORK  [thread1] connection accepted from 127.0.0.1:39214 #1 (1 connection now open)
 ```
 
 Once we see `MongoDB init process done. Ready for start up.` in the log, the database is ready.
@@ -231,7 +220,7 @@ spec:
 
 ```
 
-Now, wait a few minutes. the KubeDB operator will create necessary PVC, statefulset, services, secret etc. If everything goes well, we should see that a pod with the name `minute-mongodb-0` has been created.
+Now, wait a few minutes. the KubeDB operator will create necessary PVC, statefulset, deployment, services, secret etc. If everything goes well, we should see that a pod with the name `minute-mongodb-0` has been created.
 
 Check that the statefulset's pod is running
 
@@ -245,32 +234,20 @@ Check the pod's log to see if the database is ready
 
 ```console
 $ kubectl logs -f -n demo minute-mongodb-0
-Initializing database
-2019-05-31T05:09:12.165236Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:09:12.165298Z 0 [System] [MY-013169] [Server] /usr/sbin/mongodbd (mongodbd 8.0.14) initializing of server in progress as process 28
-2019-05-31T05:09:24.903995Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2019-05-31T05:09:30.857155Z 0 [System] [MY-013170] [Server] /usr/sbin/mongodbd (mongodbd 8.0.14) initializing of server has completed
-Database initialized
-MongoDB init process in progress...
-MongoDB init process in progress...
-2019-05-31T05:09:33.931254Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:09:33.931315Z 0 [System] [MY-010116] [Server] /usr/sbin/mongodbd (mongodbd 8.0.14) starting as process 79
-2019-05-31T05:09:34.819349Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2019-05-31T05:09:34.834673Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mongodbd' in the path is accessible to all OS users. Consider choosing a different directory.
-2019-05-31T05:09:34.850188Z 0 [System] [MY-010931] [Server] /usr/sbin/mongodbd: ready for connections. Version: '8.0.14'  socket: '/var/run/mongodbd/mongodbd.sock'  port: 0  MongoDB Community Server - GPL.
-2019-05-31T05:09:35.064435Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/mongodbd/mongodbx.sock'
-Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-
-2019-05-31T05:09:41.236940Z 0 [System] [MY-010910] [Server] /usr/sbin/mongodbd: Shutdown complete (mongodbd 8.0.14)  MongoDB Community Server - GPL.
-
-MongoDB init process done. Ready for start up.
-
+about to fork child process, waiting until server is ready for connections.
+forked process: 17
+2019-06-10T08:56:45.259+0000 I CONTROL  [main] ***** SERVER RESTARTED *****
+2019-06-10T08:56:45.263+0000 I CONTROL  [initandlisten] MongoDB starting : pid=17 port=27017 dbpath=/data/db 64-bit host=quick-mongodb-0
+...
+...
+MongoDB init process complete; ready for start up.
+...
+..
+2019-06-10T08:56:49.287+0000 I NETWORK  [thread1] waiting for connections on port 27017
+2019-06-10T08:56:57.179+0000 I NETWORK  [thread1] connection accepted from 127.0.0.1:39214 #1 (1 connection now open)
 ```
 
-`MongoDB init process done. Ready for start up.` in the log signifies that the database is running successfully.
+`connection accepted` in the log signifies that the database is running successfully.
 
 ## Cleaning up
 

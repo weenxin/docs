@@ -106,7 +106,6 @@ $ kubectl get rolebinding -n demo my-custom-rolebinding -o yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  creationTimestamp: "kubectl get rolebinding -n demo my-custom-rolebinding -o yaml"
   name: my-custom-rolebinding
   namespace: demo
   resourceVersion: "1405"
@@ -139,7 +138,7 @@ metadata:
   name: quick-redis
   namespace: demo
 spec:
-  version: "4.0-v1"
+  version: "4.0-v2"
   storageType: Durable
   storage:
     podTemplate:
@@ -169,31 +168,16 @@ Check the pod's log to see if the database is ready
 
 ```console
 $ kubectl logs -f -n demo quick-redis-0
-Initializing database
-2019-05-31T05:02:35.307699Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:02:35.307762Z 0 [System] [MY-013169] [Server] /usr/sbin/redisd (redisd 8.0.14) initializing of server in progress as process 29
-2019-05-31T05:02:47.346326Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2019-05-31T05:02:53.777918Z 0 [System] [MY-013170] [Server] /usr/sbin/redisd (redisd 8.0.14) initializing of server has completed
-Database initialized
-Redis init process in progress...
-Redis init process in progress...
-2019-05-31T05:02:56.656884Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:02:56.656953Z 0 [System] [MY-010116] [Server] /usr/sbin/redisd (redisd 8.0.14) starting as process 80
-2019-05-31T05:02:57.876853Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2019-05-31T05:02:57.892774Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/redisd' in the path is accessible to all OS users. Consider choosing a different directory.
-2019-05-31T05:02:57.910391Z 0 [System] [MY-010931] [Server] /usr/sbin/redisd: ready for connections. Version: '8.0.14'  socket: '/var/run/redisd/redisd.sock'  port: 0  Redis Community Server - GPL.
-2019-05-31T05:02:58.045050Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/redisd/redisx.sock'
-Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-
-2019-05-31T05:03:04.217396Z 0 [System] [MY-010910] [Server] /usr/sbin/redisd: Shutdown complete (redisd 8.0.14)  Redis Community Server - GPL.
-
-Redis init process done. Ready for start up.
+1:C 10 Jun 04:32:25.537 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 10 Jun 04:32:25.537 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 10 Jun 04:32:25.537 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 10 Jun 04:32:25.537 * Running mode=standalone, port=6379.
+1:M 10 Jun 04:32:25.537 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+1:M 10 Jun 04:32:25.537 # Server initialized
+1:M 10 Jun 04:32:25.537 * Ready to accept connections
 ```
 
-Once we see `Redis init process done. Ready for start up.` in the log, the database is ready.
+Once we see `Ready to accept connections` in the log, the database is ready.
 
 ## Reusing Service Account
 
@@ -215,7 +199,7 @@ metadata:
   name: minute-redis
   namespace: demo
 spec:
-  version: "4.0-v1"
+  version: "4.0-v2"
   storageType: Durable
   storage:
     podTemplate:
@@ -245,32 +229,16 @@ Check the pod's log to see if the database is ready
 
 ```console
 $ kubectl logs -f -n demo minute-redis-0
-Initializing database
-2019-05-31T05:09:12.165236Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:09:12.165298Z 0 [System] [MY-013169] [Server] /usr/sbin/redisd (redisd 8.0.14) initializing of server in progress as process 28
-2019-05-31T05:09:24.903995Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2019-05-31T05:09:30.857155Z 0 [System] [MY-013170] [Server] /usr/sbin/redisd (redisd 8.0.14) initializing of server has completed
-Database initialized
-Redis init process in progress...
-Redis init process in progress...
-2019-05-31T05:09:33.931254Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
-2019-05-31T05:09:33.931315Z 0 [System] [MY-010116] [Server] /usr/sbin/redisd (redisd 8.0.14) starting as process 79
-2019-05-31T05:09:34.819349Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2019-05-31T05:09:34.834673Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/redisd' in the path is accessible to all OS users. Consider choosing a different directory.
-2019-05-31T05:09:34.850188Z 0 [System] [MY-010931] [Server] /usr/sbin/redisd: ready for connections. Version: '8.0.14'  socket: '/var/run/redisd/redisd.sock'  port: 0  Redis Community Server - GPL.
-2019-05-31T05:09:35.064435Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/redisd/redisx.sock'
-Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
-Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-
-2019-05-31T05:09:41.236940Z 0 [System] [MY-010910] [Server] /usr/sbin/redisd: Shutdown complete (redisd 8.0.14)  Redis Community Server - GPL.
-
-Redis init process done. Ready for start up.
-
+1:C 10 Jun 04:32:25.537 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 10 Jun 04:32:25.537 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 10 Jun 04:32:25.537 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 10 Jun 04:32:25.537 * Running mode=standalone, port=6379.
+1:M 10 Jun 04:32:25.537 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+1:M 10 Jun 04:32:25.537 # Server initialized
+1:M 10 Jun 04:32:25.537 * Ready to accept connections
 ```
 
-`Redis init process done. Ready for start up.` in the log signifies that the database is running successfully.
+`Ready to accept connections` in the log signifies that the database is running successfully.
 
 ## Cleaning up
 
