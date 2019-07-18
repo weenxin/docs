@@ -95,16 +95,16 @@ $ docker push aerokite/operator:default
 
 ```console
 # Clone kubedb-operator project
-$git clone https://github.com/kubedb/operator
+$ git clone https://github.com/kubedb/operator
 
 #cd to operator project
-$cd $GOPATH/src/github.com/kubedb/operator
+$ cd $GOPATH/src/github.com/kubedb/operator
 
 #Deploy KubeDB resources and run KubeDB operator in localhost
-$./hack/deploy/setup.sh --minikube --run
+$ ./hack/deploy/setup.sh --minikube --run
 
 #Deploy Kubedb Catalog, *KubeDB operator will run in a message loop, you should not stop it immediately, To install Kubedb Catalog you can just start another terminal.* 
-$./hack/deploy/install-catalog.sh
+$ ./hack/deploy/install-catalog.sh
 ```
 
 After deploy KubeDB successfully, you can debug it using any IDE you like, You should start your KubeDB operator using the same param in *./hack/deploy/setup.sh*. 
